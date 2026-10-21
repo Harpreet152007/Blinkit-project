@@ -26,7 +26,7 @@ st.sidebar.title("Blinkit Dashboard")
 
 page = st.sidebar.radio(
     "Go To",
-    ["Home", "Dataset Cleaning", "EDA", "Research Questions", "Sales Prediction", "Conclusion"]
+    ["Home", "Dataset Cleaning", "EDA", "Research Questions", "Order Prediction", "Conclusion"]
 )
 
 # ================= HOME =================
@@ -863,9 +863,9 @@ The pie chart shows the percentage of each delivery status.
 """)
 # ================= SALES PREDICTION =================
 
-elif page == "Sales Prediction":
+elif page == "Order Prediction":
 
-    st.title("🤖 Blinkit Order Sales Prediction")
+    st.title("🤖 Blinkit Order Prediction")
 
     st.write("""
     This page predicts the estimated order amount using
