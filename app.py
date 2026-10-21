@@ -1,15 +1,7 @@
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import numpy as np
-
-from sklearn.model_selection import train_test_split
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.impute import SimpleImputer
-from sklearn.pipeline import Pipeline
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 
 # Page Configuration
@@ -26,7 +18,7 @@ st.sidebar.title("Blinkit Dashboard")
 
 page = st.sidebar.radio(
     "Go To",
-    ["Home", "Dataset Cleaning", "EDA", "Research Questions","sales prediction","Conclusion"]
+    ["Home", "Dataset Cleaning", "EDA", "Research Questions", "Conclusion"]
 )
 
 # ================= HOME =================
@@ -318,7 +310,7 @@ elif page == "EDA":
     )
 
     
-    st.plotly_chart(fig,width="stretch")
+    st.plotly_chart(fig,use_container_width=True)
 
     
 
@@ -362,7 +354,7 @@ It helps identify the busiest and least busy ordering hours.
     marker_line_width=2
 )
     
-    st.plotly_chart(fig,width="stretch")
+    st.plotly_chart(fig,use_container_width=True)
     st.subheader("📖 Explanation")
 
     st.write("""
@@ -402,7 +394,7 @@ It helps identify monthly sales trends and seasonal demand.
     ]
     )
 
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
     st.subheader("📖 Explanation")
 
@@ -442,7 +434,7 @@ This pie chart shows the percentage distribution of different payment methods us
 
     )
 
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
     st.subheader("📖 Explanation")
 
@@ -483,7 +475,7 @@ It evaluates delivery performance.
     marker_line_width=2
 )
 
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
     st.subheader("📖 Explanation")
 
@@ -525,7 +517,7 @@ This graph compares the total revenue generated through each payment method.
     marker_line_width=2
 )
 
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
     st.subheader("📖 Explanation")
 
@@ -569,7 +561,7 @@ It helps identify the busiest weekdays.
     }
     )
 
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
     st.subheader("📖 Explanation")
 
@@ -623,7 +615,7 @@ elif page == "Research Questions":
     marker_line_width=2
 )
 
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
     st.write("### Analysis")
     st.write("""
@@ -665,7 +657,7 @@ It represents the overall business performance based on order value.
     marker_line_width=2
     )
 
-    st.plotly_chart(fig,width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
     st.write("### Analysis")
     st.write("""
@@ -721,7 +713,7 @@ This graph compares the total number of orders placed using each payment method.
     textposition="outside"
     )
 
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
     st.write("### Analysis")
     st.write("""
@@ -755,9 +747,7 @@ The graph shows total orders placed on each weekday.
         color_discrete_sequence=["#FFD400" ]
     )
 
-    st.plotly_chart(fig, width="stretch")
-
-    
+    st.plotly_chart(fig, use_container_width=True)
 
     st.write("### Analysis")
     st.write("""
@@ -809,7 +799,7 @@ The graph shows customer ordering activity during different hours of the day.
     marker_line_width=2
     )
 
-    st.plotly_chart(fig,width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
     st.write("### Analysis")
     st.write("""
@@ -846,7 +836,7 @@ This graph compares total monthly orders.
         "#FFEB3B"]
     )
 
-    st.plotly_chart(fig, width="stretch")
+    st.plotly_chart(fig, use_container_width=True)
 
     st.write("### Analysis")
     st.write("""
@@ -861,177 +851,6 @@ The pie chart shows the percentage of each delivery status.
 
 • Helps evaluate delivery performance.
 """)
-elif page == "Sales Prediction":
-    st.title("🤖 Blinkit Order Sales Prediction")
-    
-# ================= SALES PREDICTION =================
-
-elif page == "Sales Prediction":
-
-    st.title("🤖 Blinkit Order Sales Prediction")
-
-    st.write("""
-    This page predicts the estimated order amount using
-    Machine Learning and the Random Forest Regression algorithm.
-    """)
-
-    # Load and prepare dataset
-    data = pd.read_csv("blinkit_orders.csv")
-
-    data["order_date"] = pd.to_datetime(
-        data["order_date"], errors="coerce"
-    )
-    data["order_total"] = pd.to_numeric(
-        data["order_total"], errors="coerce"
-    )
-
-    data = data.dropna(
-        subset=[
-            "order_date",
-            "order_total",
-            "payment_method",
-            "store_id"
-        ]
-    )
-
-    data = data[data["order_total"] >= 0].copy()
-
-    # Create date-time features
-    data["year"] = data["order_date"].dt.year
-    data["month"] = data["order_date"].dt.month
-    data["day"] = data["order_date"].dt.day
-    data["hour"] = data["order_date"].dt.hour
-    data["weekday"] = data["order_date"].dt.dayofweek
-
-    data["store_id"] = data["store_id"].astype(str)
-    data["payment_method"] = data["payment_method"].astype(str)
-
-    # Select features and target
-    features = [
-        "year",
-        "month",
-        "day",
-        "hour",
-        "weekday",
-        "payment_method",
-        "store_id"
-    ]
-
-    X = data[features]
-    y = data["order_total"]
-
-    # Preprocessing
-    numeric_features = [
-        "year", "month", "day", "hour", "weekday"
-    ]
-
-    categorical_features = [
-        "payment_method", "store_id"
-    ]
-
-    numeric_transformer = Pipeline(steps=[
-        ("imputer", SimpleImputer(strategy="median"))
-    ])
-
-    categorical_transformer = Pipeline(steps=[
-        ("imputer", SimpleImputer(strategy="most_frequent")),
-        ("encoder", OneHotEncoder(handle_unknown="ignore"))
-    ])
-
-    preprocessor = ColumnTransformer(transformers=[
-        ("num", numeric_transformer, numeric_features),
-        ("cat", categorical_transformer, categorical_features)
-    ])
-
-    # Random Forest model
-    model = Pipeline(steps=[
-        ("preprocessor", preprocessor),
-        ("regressor", RandomForestRegressor(
-            n_estimators=100,
-            min_samples_leaf=5,
-            random_state=42,
-            n_jobs=-1
-        ))
-    ])
-
-    # Train and evaluate
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
-    )
-
-    model.fit(X_train, y_train)
-    predictions = model.predict(X_test)
-
-    mae = mean_absolute_error(y_test, predictions)
-    rmse = np.sqrt(mean_squared_error(y_test, predictions))
-    r2 = r2_score(y_test, predictions)
-
-    st.subheader("📊 Model Performance")
-
-    col1, col2, col3 = st.columns(3)
-
-    col1.metric("MAE", f"₹{mae:.2f}")
-    col2.metric("RMSE", f"₹{rmse:.2f}")
-    col3.metric("R² Score", f"{r2:.3f}")
-
-    st.info(
-        "MAE and RMSE show prediction errors. "
-        "A lower error is generally better. "
-        "R² should be interpreted along with these errors."
-    )
-
-    # User input
-    st.subheader("🛒 Predict Your Order Amount")
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        order_date = st.date_input(
-            "Select Order Date",
-            value=data["order_date"].max().date()
-        )
-
-        order_time = st.time_input(
-            "Select Order Time"
-        )
-
-        payment_method = st.selectbox(
-            "Payment Method",
-            sorted(data["payment_method"].unique())
-        )
-
-    with col2:
-        store_id = st.selectbox(
-            "Select Store ID",
-            sorted(data["store_id"].unique())
-        )
-
-    if st.button("🔮 Predict Order Amount"):
-
-        input_data = pd.DataFrame([{
-            "year": order_date.year,
-            "month": order_date.month,
-            "day": order_date.day,
-            "hour": order_time.hour,
-            "weekday": order_date.weekday(),
-            "payment_method": payment_method,
-            "store_id": str(store_id)
-        }])
-
-        predicted_amount = model.predict(input_data)[0]
-
-        st.success(
-            f"Estimated Order Amount: ₹{predicted_amount:,.2f}"
-        )
-
-        st.caption(
-            "This is an estimated amount, not a guaranteed actual sale."
-        )
-
-    # Show sample data
-    with st.expander("View Dataset Used for Prediction"):
-        st.dataframe(data.head(10), width="stretch")
-
 elif page == "Conclusion":
 
     st.title("📈 Conclusion")
