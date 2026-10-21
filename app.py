@@ -43,8 +43,6 @@ and business trends through interactive visualizations and data analysis.
     st.header("📖 Project Overview")
 
     st.write("""
-This project analyzes the Blinkit Orders dataset to extract meaningful business insights.
-The dashboard includes:
 
 • Dataset Cleaning
 
@@ -317,8 +315,10 @@ elif page == "EDA":
     st.subheader("📖 Explanation")
 
     st.write("""
-This line graph shows the total number of orders placed during each hour of the day.
-It helps identify the busiest and least busy ordering hours.
+ The line chart shows how the number of orders changes throughout the day.
+ Order volume reaches its highest level around 8 AM and 1 PM, indicating peak customer activity.
+ A noticeable drop in orders occurs around 9 AM, representing a low-demand period.
+ These insights help Blinkit optimize staffing, inventory management, and delivery operations during peak and off-peak hours.
 """)
 
     st.subheader("📌 Key Insights")
@@ -360,6 +360,9 @@ It helps identify the busiest and least busy ordering hours.
     st.write("""
 This bar chart compares the total number of orders placed in each month.
 It helps identify monthly sales trends and seasonal demand.
+The chart shows the total number of orders placed in each month.
+Orders increase during the middle months and decrease in some later months.
+This analysis helps identify seasonal demand patterns for better inventory and staffing planning.
 """)
 
     st.subheader("📌 Key Insights")
