@@ -18,7 +18,7 @@ st.sidebar.title("Blinkit Dashboard")
 
 page = st.sidebar.radio(
     "Go To",
-    ["Home", "Dataset Cleaning", "EDA", "Research Questions", "Conclusion"]
+    ["Home", "Dataset Cleaning", "EDA","Conclusion"]
 )
 
 # ================= HOME =================
