@@ -18,7 +18,7 @@ st.sidebar.title("Blinkit Dashboard")
 
 page = st.sidebar.radio(
     "Go To",
-    ["Home", "Dataset Cleaning", "EDA","Conclusion"]
+    ["Home", "Dataset Cleaning", "EDA","Reserch question","Conclusion"]
 )
 
 # ================= HOME =================
@@ -586,7 +586,7 @@ It shows customer payment preferences on each day of the week.
 """)
 elif page == "Research Questions":
 
-    st.title("❓ Research Questions")
+    st.title(" Research Questions")
 
 
 
