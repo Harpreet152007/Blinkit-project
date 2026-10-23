@@ -14,7 +14,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 # Page Configuration
 st.set_page_config(
-    page_title="Blinkit Sales Dashboard",
+    page_title="Blinkit Order Dashboard",
     page_icon="🛒",
     layout="wide"
 )
@@ -33,14 +33,14 @@ page = st.sidebar.radio(
 
 if page == "Home":
 
-    st.title("🛒 Blinkit Sales Analysis Dashboard")
+    st.title("🛒 Blinkit Order Analysis Dashboard")
 
     # ---------------- Project Description ----------------
 
     st.header("📌 Project Description")
 
     st.write("""
-The Blinkit Sales Analysis Dashboard is developed to analyze Blinkit grocery order data
+The Blinkit Order Analysis Dashboard is developed to analyze Blinkit grocery order data
 using Python, Pandas, Plotly, and Streamlit. The project focuses on understanding customer
 purchasing behavior, sales performance, payment preferences, delivery performance,
 and business trends through interactive visualizations and data analysis.
